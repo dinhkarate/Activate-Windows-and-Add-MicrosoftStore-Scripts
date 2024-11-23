@@ -5,35 +5,34 @@ $WorkFolder = "C:\Temp\SetupFiles"
 if (!(Test-Path $WorkFolder)) { New-Item -ItemType Directory -Path $WorkFolder }
 
 if ($EnableAddStore) {
-    Write-Host "Step 1: Cài đặt Microsoft Store..."
+    Write-Host "Step 1: Installing Microsoft Store..."
     $RepoUrl = "https://codeload.github.com/kkkgo/LTSC-Add-MicrosoftStore/zip/refs/heads/master"
     $ZipFile = "$env:TEMP\LTSC-Add-MicrosoftStore.zip"
     $ExtractPath = "$env:TEMP\LTSC-Add-MicrosoftStore"
 
-    Write-Host "Đang tải repo từ GitHub..."
+    Write-Host "Downloading repository from GitHub..."
     $WebClient = New-Object System.Net.WebClient
     $WebClient.DownloadFile($RepoUrl, $ZipFile)
-    Write-Host "Đã tải repo về: $ZipFile"
+    Write-Host "Repository downloaded to: $ZipFile"
 
-    Write-Host "Đang giải nén repo..."
+    Write-Host "Extracting repository..."
     Expand-Archive -Path $ZipFile -DestinationPath $ExtractPath -Force
-    Write-Host "Đã giải nén vào: $ExtractPath"
+    Write-Host "Repository extracted to: $ExtractPath"
 
     $AddStoreScript = "$ExtractPath\LTSC-Add-MicrosoftStore-master\Add-Store.cmd"
-    Write-Host "Đang thực thi Add-Store.cmd..."
+    Write-Host "Executing Add-Store.cmd..."
     $CmdFile = "$ExtractPath\LTSC-Add-MicrosoftStore-master\Add-Store.cmd"
     (Get-Content $CmdFile) -notmatch 'pause' | Set-Content $CmdFile
-    Write-Host "Đã loại bỏ lệnh 'pause' khỏi $CmdFile."
+    Write-Host "Removed 'pause' command from $CmdFile."
     Start-Process -FilePath "cmd.exe" -ArgumentList "/c $AddStoreScript" -Wait
-    Write-Host "Đã hoàn tất cài đặt Microsoft Store!"
-
+    Write-Host "Microsoft Store installation completed!"
 }
 
 if ($EnableKMSActivation) {
-    Write-Host "Step 2: Kích hoạt bản quyền Windows..."
-    Write-Host "Ấn phím 3 sau khi cmd chạy lên để hoàn tất kích hoạt"
+    Write-Host "Step 2: Activating Windows license..."
+    Write-Host "Press '3' in the cmd window to complete the activation process."
     Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -Command irm https://get.activated.win | iex"
-    Write-Host "Đã kích hoạt bản quyền Windows!"
+    Write-Host "Windows activation completed!"
 }
 
-Write-Host "Hoàn tất quá trình cài đặt!"
+Write-Host "Installation process completed!"
