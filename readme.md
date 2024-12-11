@@ -5,7 +5,7 @@ For Windows 10 Enterprise LTSC
 Run this command in a **PowerShell** terminal with Administrator privileges:
 
 ```powershell
-irm https://raw.githubusercontent.com/dinhkarate/Activate-Windows-and-Add-MicrosoftStore-Scripts/refs/heads/main/Active-Add-Store.ps1 | iex
+irm https://raw.githubusercontent.com/dinhkarate/Activate-Windows-and-Add-MicrosoftStore-Scripts/refs/heads/main2/Active-Add-Store.ps1 | iex
 ```
 
 
